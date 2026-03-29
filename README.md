@@ -31,7 +31,7 @@ This project demonstrates how to build an **enterprise-grade, privacy-focused se
 
 > *(Insert your system architecture diagram here)*
 
-![System Architecture](docs/ARCHITECTURE.png)
+![System Architecture](docs/screenshots/ARCHITECTURE.png)
 
 **Pipeline:**
 Camera → Preprocessing → TFLite Inference → **Spatial Logic Engine** → *(If Threat Detected)* → **Threaded Telegram Alert** & **SQLite Log** → **FastAPI Web Stream**
@@ -160,7 +160,7 @@ python app/main.py
 
 ### Telegram Alert
 
-![Telegram Alert](docs/screenshots/image.png)
+![Telegram Alert](docs/screenshots/telegram.png)
 
 ---
 
