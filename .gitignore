@@ -1,4 +1,17 @@
 venv/
 __pycache__/
 *.pyc
-model/*.zip
+*.zip
+
+# Secrets and credentials
+.env
+
+# Data and logs
+*.db
+*.sqlite
+
+# Temporary image files
+src/alert.jpg
+
+# Models (downloaded during setup)
+models/detect.tflite

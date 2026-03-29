@@ -1,4 +1,4 @@
-# 🧠 Edge AI Smart Surveillance System
+# Edge AI Smart Surveillance System
 
 A real-time, stateful **Edge AI-powered surveillance system** built for the Raspberry Pi. It performs on-device human detection, utilizes spatial logic for virtual tripwires, serves a live local web dashboard, and sends instant asynchronous alerts via Telegram — all without relying on cloud processing.
 
@@ -31,7 +31,7 @@ This project demonstrates how to build an **enterprise-grade, privacy-focused se
 
 > *(Insert your system architecture diagram here)*
 
-![System Architecture](docs/architecture.png)
+![System Architecture](docs/ARCHITECTURE.png)
 
 **Pipeline:**
 Camera → Preprocessing → TFLite Inference → **Spatial Logic Engine** → *(If Threat Detected)* → **Threaded Telegram Alert** & **SQLite Log** → **FastAPI Web Stream**
@@ -156,11 +156,11 @@ python app/main.py
 
 ### Detection Output
 
-![Detection](docs/screenshots/detection.png)
+![Detection](docs/screenshots/DASHBOARD.png)
 
 ### Telegram Alert
 
-![Telegram Alert](docs/screenshots/telegram.png)
+![Telegram Alert](docs/screenshots/image.png)
 
 ---
 
