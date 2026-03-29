@@ -1,6 +1,6 @@
 # Edge AI Smart Surveillance System
 
-A real-time, stateful **Edge AI-powered surveillance system** built for the Raspberry Pi. It performs on-device human detection, utilizes spatial logic for virtual tripwires, serves a live local web dashboard, and sends instant asynchronous alerts via Telegram — all without relying on cloud processing.
+A real-time, stateful **Edge AI-powered surveillance system** built for the Raspberry Pi. It performs on-device human detection, utilizes spatial logic for virtual tripwires, serves a live local web dashboard, and sends instant asynchronous alerts via Telegram-all without relying on cloud processing.
 
 ---
 
@@ -28,8 +28,6 @@ This project demonstrates how to build an **enterprise-grade, privacy-focused se
 ---
 
 ##  System Architecture
-
-> *(Insert your system architecture diagram here)*
 
 ![System Architecture](docs/screenshots/ARCHITECTURE.png)
 
