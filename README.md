@@ -150,8 +150,6 @@ python app/main.py
 
 ##  Screenshots
 
-> *(Add screenshots of detection and Telegram alerts here)*
-
 ### Detection Output
 
 ![Detection](docs/screenshots/DASHBOARD.png)
