@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 import requests
@@ -6,7 +7,6 @@ import threading
 import io
 import logging
 from tflite_runtime.interpreter import Interpreter
-
 
 # LOGGING SETUP
 logging.basicConfig(
@@ -17,8 +17,8 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 # CONFIGURATION
-BOT_TOKEN   = "YOUR_BOT_TOKEN_HERE"      
-CHAT_ID     = "YOUR_CHAT_ID_HERE"         
+BOT_TOKEN =os.getenv("BOT_TOKEN")
+CHAT_ID =os.getenv("CHAT_ID")     
 COOLDOWN    = 15                          # seconds between alerts
 THRESHOLD   = 0.5                         # minimum detection confidence
 MODEL_PATH  = "../model/detect.tflite"
@@ -43,6 +43,7 @@ try:
 except FileNotFoundError as e:
     log.error(f"Startup failed: {e}")
     raise SystemExit(1)
+
 
 # TELEGRAM ALERT
 def send_alert(frame: np.ndarray, score: float) -> None:
@@ -70,6 +71,7 @@ def send_alert(frame: np.ndarray, score: float) -> None:
         log.error(f"Telegram request failed: {e}")
     except Exception as e:
         log.error(f"Unexpected error in send_alert: {e}")
+
 
 # INFERENCE
 def run_inference(frame: np.ndarray):
@@ -106,6 +108,7 @@ def run_inference(frame: np.ndarray):
             best_box   = boxes[i]
 
     return best_score, best_box
+
 
 # DRAW DETECTION
 def draw_detection(frame: np.ndarray, box, score: float) -> None:
@@ -172,3 +175,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

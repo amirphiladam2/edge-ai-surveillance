@@ -1,80 +1,83 @@
 # 🧠 Edge AI Smart Surveillance System
 
-A real-time **Edge AI-powered surveillance system** built on Raspberry Pi that performs on-device human detection and sends instant alerts via Telegram — without relying on cloud processing.
+A real-time, stateful **Edge AI-powered surveillance system** built for the Raspberry Pi. It performs on-device human detection, utilizes spatial logic for virtual tripwires, serves a live local web dashboard, and sends instant asynchronous alerts via Telegram — all without relying on cloud processing.
 
 ---
 
 ## 🚀 Overview
 
-This project demonstrates how to build a **low-cost, efficient, and privacy-focused security system** using:
+This project demonstrates how to build an **enterprise-grade, privacy-focused security microservice** using:
 
-* 🖥️ Local AI inference (TensorFlow Lite)
-* 🎥 Real-time video processing (OpenCV)
-* 📲 Instant alerting (Telegram Bot API)
-
-All computation is done **on-device**, reducing latency and eliminating dependency on cloud services.
-
----
-
-## ✨ Features
-
-* ✅ Real-time human detection using Edge AI
-* 📦 Lightweight TensorFlow Lite model (MobileNet SSD)
-* 🎯 Single-object filtering (removes duplicate bounding boxes)
-* 📸 Automatic snapshot capture on detection
-* 📲 Instant Telegram alerts with image
-* ⚡ Fully offline detection (no cloud required)
-* 🧠 Optimized for Raspberry Pi (ARM architecture)
+* 🖥️ **Local AI Inference:** TensorFlow Lite for low-latency edge processing.
+* 🎯 **Spatial Logic:** Virtual restricted zones to eliminate false positives and alert fatigue.
+* 💾 **Stateful Logging:** SQLite database for persistent threat history.
+* 🌐 **Live Dashboard:** FastAPI server streaming MJPEG video to local browsers.
+* 📲 **Asynchronous Alerting:** Threaded Telegram Bot API integration to prevent camera freezing.
 
 ---
 
-## 🏗️ System Architecture
+## ✨ Key Features
 
-> *(Insert your system architecture diagram below)*
+* ✅ **Real-Time Human Detection:** Powered by a lightweight MobileNet SSD model.
+* 🛡️ **Virtual Tripwires:** Multi-point checking (Feet + Center of Mass) triggers alerts *only* when an intruder enters a user-defined zone.
+* 📊 **FastAPI Web Dashboard:** View live camera feeds and historical database logs on your local Wi-Fi.
+* 📸 **Local Database Logging:** Automatically saves high-res incident snapshots and logs them to SQLite.
+* 📲 **Threaded Telegram Alerts:** In-memory image encoding pushes alerts instantly without dropping video frames.
+* ⚡ **Fully Offline Inference:** No cloud APIs required for detection.
+
+---
+
+## 📐 System Architecture
+
+> *(Insert your system architecture diagram here)*
 
 ![System Architecture](docs/architecture.png)
 
 **Pipeline:**
-
-Camera → Frame Capture → Preprocessing → TFLite Inference → Detection Filtering → Alert Trigger → Telegram Notification
+Camera → Preprocessing → TFLite Inference → **Spatial Logic Engine** → *(If Threat Detected)* → **Threaded Telegram Alert** & **SQLite Log** → **FastAPI Web Stream**
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Component       | Technology                      |
-| --------------- | ------------------------------- |
-| Edge Device     | Raspberry Pi 5                  |
-| Programming     | Python 3.11                     |
-| Computer Vision | OpenCV                          |
-| AI Model        | TensorFlow Lite (MobileNet SSD) |
-| Communication   | Telegram Bot API                |
-| Version Control | Git + GitHub                    |
+| Component | Technology |
+| :--- | :--- |
+| **Edge Device** | Raspberry Pi 5 |
+| **Backend & API** | Python 3.11, FastAPI, Uvicorn |
+| **Computer Vision** | OpenCV, NumPy |
+| **AI Model** | TensorFlow Lite (MobileNet SSD) |
+| **Database** | SQLite3 |
+| **Alerting** | Telegram Bot API, python-dotenv |
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 edge-ai-surveillance/
 │
-├── model/
-│   ├── detect.tflite
-│   └── labelmap.txt
+├── app/                        # 📦 Core application code
+│   ├── main.py                 # Entry point: ML, Camera, and Logic
+│   ├── api.py                  # FastAPI web server and stream generator
+│   ├── database.py             # SQLite initialization and logging
+│   └── get_coords.py           # GUI calibration tool for tripwires
 │
-├── src/
-│   └── detect.py
+├── models/                     # 🤖 AI Assets
+│   ├── detect.tflite           
+│   └── labelmap.txt            
 │
-├── docs/
-│   ├── architecture.png
-│   └── screenshots/
+├── templates/                  # 🖥️ Web UI
+│   └── index.html              
 │
-├── requirements.txt
-├── .gitignore
+├── data/                       # 📂 Local Storage (Git-ignored)
+│   ├── captures/               # Saved threat snapshots
+│   └── surveillance.db         # SQLite database
+│
+├── .env                        # 🔑 API Secrets
+├── requirements.txt            
 └── README.md
-```
 
----
+
 
 ## ⚙️ Installation & Setup
 
@@ -86,12 +89,18 @@ cd edge-ai-surveillance
 ```
 
 ---
+### 5️⃣ Download the AI Model
+```bash
+cd models
+wget [https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip](https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip)
+unzip coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
 
 ### 2️⃣ Setup Python environment
 
 ```
-python3.11 -m venv venv
+python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
 ```
 
 ---
@@ -114,9 +123,9 @@ unzip coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
 
 ---
 
-### 5️⃣ Configure Telegram Bot
+### 5️⃣ Create .env
 
-Update the following in `src/detect.py`:
+Add your apis to the .env file:
 
 ```
 BOT_TOKEN = "YOUR_BOT_TOKEN"
@@ -125,11 +134,10 @@ CHAT_ID = "YOUR_CHAT_ID"
 
 ---
 
-### 6️⃣ Run the system
+### 6️.Run the system
 
 ```
-cd src
-python detect.py
+python app/main.py
 ```
 
 ---
@@ -148,37 +156,25 @@ python detect.py
 
 ---
 
+**And drop these right above the "Future Improvements" section:**
+```markdown
 ## 🧪 How It Works
 
-1. Webcam captures live frames
-2. Frames are resized and preprocessed
-3. TensorFlow Lite model performs inference
-4. Best “person” detection is selected
-5. Bounding box is drawn
-6. Snapshot is captured
-7. Alert is sent via Telegram
+1. Webcam captures live frames.
+2. OpenCV resizes and preprocesses the image.
+3. TensorFlow Lite performs on-device inference.
+4. The system calculates the bounding box and the target's center of mass.
+5. **Spatial Logic:** If the target's coordinates breach the user-defined Restricted Zone, the alarm triggers.
+6. A high-res snapshot is saved locally and logged to the SQLite database.
+7. An asynchronous thread pushes the image and alert to Telegram.
 
 ---
 
 ## ⚠️ Limitations
 
-* Detection accuracy depends on lighting conditions
-* Optimized for single-person detection
-* No object tracking (yet)
-* CPU-bound inference (no hardware acceleration)
-
----
-
-## 🚀 Future Improvements
-
-* 🔁 Multi-object tracking
-* 🌙 Night vision optimization
-* 📊 Web dashboard for monitoring
-* 🔊 IoT integration (ESP32 alarm trigger)
-* ☁️ Optional cloud logging
-* 🎥 Multi-camera support
-
----
+* **Lighting Dependent:** Detection accuracy drops in low-light environments without IR cameras.
+* **CPU-Bound:** Inference runs entirely on the Pi's CPU without a dedicated neural processing unit (NPU like Google Coral).
+* **Single-Camera Scope:** The current FastAPI streaming architecture is optimized for a single video feed.
 
 ## 🤝 Contributing
 
