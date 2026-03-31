@@ -171,8 +171,8 @@ python app/main.py
 
 ---
 ##  Tools I used:
-**VSCodium:** To write code 
-**Canva:** To designed the sytem architecture
+* **VSCodium:** To write code 
+* **Canva:** To design the sytem architecture
 
 
 ---
