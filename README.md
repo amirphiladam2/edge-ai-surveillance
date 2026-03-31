@@ -150,12 +150,9 @@ python app/main.py
 
 ##  Screenshots
 
-<<<<<<< HEAD
 ![Raspberry Pi](docs/screenshots/RaspberryPi.jpeg)
-![Person detection](docs/screenshots/Opencv.jpeg)
+![Person detection](docs/screenshots/OpenCV.jpeg)
 
-=======
->>>>>>> fc5222a8a1e1d94144f96afdd432d18cad162129
 ### Detection Output
 
 ![Detection](docs/screenshots/DASHBOARD.png)
