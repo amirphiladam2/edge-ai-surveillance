@@ -148,7 +148,7 @@ python app/main.py
 
 ---
 
-##  Screenshots
+##  Images and Screenshots
 
 ![Raspberry Pi](docs/screenshots/RaspberryPi.jpeg)
 ![Person detection](docs/screenshots/OpenCV.jpeg)
