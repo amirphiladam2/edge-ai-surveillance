@@ -152,7 +152,8 @@ python app/main.py
 
 ##  Screenshots
 
-> *(Add screenshots of detection and Telegram alerts here)*
+![Raspberry Pi](docs/screenshots/RaspberryPi.jpeg)
+![Person detection](docs/screenshots/Opencv.jpeg)
 
 ### Detection Output
 
@@ -171,7 +172,12 @@ python app/main.py
 * **Single-Camera Scope:** The current FastAPI streaming architecture is optimized for a single video feed.
 
 ---
+##  Tools I used:
+**VSCodium:** To write code 
+**Canva:** To designed the sytem architecture
 
+
+---
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to fork the repo and submit pull requests.
